@@ -51,7 +51,7 @@ The definitions in In (\ref{eqn:r2def1}) and (\ref{eqn:r2def2}) are "model free"
 
 For a linear model, equation (\ref{eqn:r2var}) is the proportion of variance in $y$ accounted for by the model. Researchers have used and extended the variance relationship in (\ref{eqn:r2var}) to develop $R^2$ metrics for a range of models such as logistic regression [@hu2006], mixed models [@piepho2019], Bayesian regression models [@gelman2018r2], and more.
 
-To our knowledge our research is the first time anyone has proposed a variation of $R^2$ for models predicting an outcome in multiple dimensions---where each $\boldsymbol{y}_i$ is a vector and $\boldsymbol{Y}$ is a matrix. Multidimensional outcomes occur in settings such as [need good examples here... simultaneous equations? neural networks? topic models?] Our $R^2$ relies on a geometric interpretation of (\ref{eqn:r2def1}). As a result, it is also model free. 
+To our knowledge our research is the first time anyone has proposed a variation of $R^2$ for models predicting an outcome in multiple dimensions---where each $\boldsymbol{y}_i$ is a vector and $\boldsymbol{Y}$ is a matrix. Multidimensional outcomes occur in settings such as modeling simultaneous equations or multivariate distributions. Our $R^2$ relies on a geometric interpretation of (\ref{eqn:r2def1}). As a result, it is also model free. 
 
 # A Geometric Interpretation of $R^2$
 The numerator and denominator in (\ref{eqn:r2def2}) may be viewed as sums of squared Euclidean distances in $\mathbb{R}_1$. Specifically, $SS_{tot.}$ is the total squared-Euclidean distance from each $y_i$ to the mean outcome, $\bar{y}$. Then $SS_{resid.}$ is the total squared-Euclidean distance from each $y_i$ to its predicted value under the model, $\hat{y}_i$.
