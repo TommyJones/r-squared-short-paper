@@ -16,8 +16,8 @@ author:
     orcid: 0000-0003-3942-9675
     affiliation: Georgetown University
     address:
-    - line 1 affiliation 1
-    - line 2 affiliation 1
+    - 3700 O St NW
+    - Washington, DC 20057
 abstract: >
   An abstract of less than 150 words.
 preamble: |
@@ -40,7 +40,7 @@ output: rticles::rjournal_article
 Introductory section which may include references in parentheses
 [@R], or cite a reference such as @R in the text.
 
-## Section title in sentence case
+## A geometric interpretation of $R^2$
 
 This section may contain a figure such as Figure \ref{fig:Rlogo}.
 
@@ -48,7 +48,7 @@ This section may contain a figure such as Figure \ref{fig:Rlogo}.
 knitr::include_graphics('Rlogo-5.png')
 ```
 
-## Another section
+## The `mvrsquared` package
 
 There will likely be several sections, perhaps including code snippets, such as:
 
@@ -56,6 +56,15 @@ There will likely be several sections, perhaps including code snippets, such as:
 x <- 1:10
 plot(x)
 ```
+
+## Use cases
+### $R^2$ for probabilistic topic models
+
+
+### Second use case
+
+
+### Third use case
 
 ## Summary
 
