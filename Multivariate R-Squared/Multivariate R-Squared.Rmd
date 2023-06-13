@@ -2,33 +2,22 @@
 title: An R-Squared for Multivariate Outcomes
 author:
   # see ?rjournal_article for more information
-  - name: Author One
-    affiliation: Affiliation
+  - name: Tommy Jones
+    affiliation: Foundation
     address:
-    - line 1
-    - line 2
+    - 1600 N Quinn St. APT 202
+    - Arlington, VA 22209
     url: https://journal.r-project.org
-    orcid: 0000-0002-9079-593X
-    email:  author1@work
-  - name: Author Two
+    orcid: 0000-0001-6457-2452
+    email:  tommy@foundatn.com
+  - name: Mark J. Meyer
     url: https://journal.r-project.org
-    email: author2@work
-    orcid: 0000-0002-9079-593X
-    affiliation: Affiliation 1
+    email: mjm556@georgetown.edu
+    orcid: 0000-0003-3942-9675
+    affiliation: Georgetown University
     address:
     - line 1 affiliation 1
     - line 2 affiliation 1
-    affiliation2: Affiliation 2
-    address2:
-    - line 1 affiliation 2
-    - line 2 affiliation 2
-  - name: Author Three
-    url: https://journal.r-project.org
-    email: author3@work
-    affiliation: Affiliation
-    address:
-    - line 1 affiliation
-    - line 2 affiliation
 abstract: >
   An abstract of less than 150 words.
 preamble: |
@@ -36,7 +25,12 @@ preamble: |
   
 # per R journal requirement, the bib filename should be the same as the output 
 # tex file. Don't forget to rename the bib file and change this example value.
-bibliography: RJreferences.bib
+bibliography: r2.bib
+date: "`r Sys.Date()`"
+header-includes:
+    - \usepackage{setspace}\doublespacing
+    - \usepackage[utf8]{inputenc}
+    - \usepackage[T1]{fontenc}
 
 output: rticles::rjournal_article
 ---
