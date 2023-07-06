@@ -25,10 +25,10 @@ preamble: |
   
 # per R journal requirement, the bib filename should be the same as the output 
 # tex file. Don't forget to rename the bib file and change this example value.
-bibliography: r2.bib
+bibliography: Multivariate-R-Squared.bib
 date: "`r Sys.Date()`"
 header-includes:
-    - \usepackage{setspace}\doublespacing
+    # - \usepackage{setspace}\doublespacing
     - \usepackage[utf8]{inputenc}
     - \usepackage[T1]{fontenc}
 
