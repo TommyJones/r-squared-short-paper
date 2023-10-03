@@ -2,7 +2,7 @@
 title: "A New (Old) Goodness of Fit Metric for Multidimensional Outcomes"
 author: 
   - Tommy Jones^[Dept. of Computational and Data Sciences, George Mason University]
-  - Mark Meyer^[Dept. of Mathematics and Statistics, Georgetown University]
+  - Mark J. Meyer^[Dept. of Mathematics and Statistics, Georgetown University]
 date: "`r Sys.Date()`"
 bibliography: [r2.bib]
 header-includes:
@@ -22,33 +22,35 @@ options(tinytex.verbose = TRUE)
 ```
 
 # Introduction
-The coefficient of determination---$R^2$---is the most popular goodness of fit metric for linear models. It has appealing properties such as a lower bound of zero, an upper bound of one, and interpretable as the proportion of varience in the outcome accounted for by the model. $R^2$'s appeal is so strong that nearly all statistical software reports $R^2$ by default when fitting linear models.
+The coefficient of determination---$R^2$---is a popular goodness of fit metric for linear models. It has appealing properties such as a lower bound of zero, an upper bound of one, and interpretable as the proportion of varience in the outcome accounted for by the model. $R^2$'s appeal is so strong that nearly all statistical software reports $R^2$ by default when fitting linear models.
 
-Several other pseudo $R^2$ measures have been developed for other use cases, such as Cox and Snell's $R^2$ [@cox1989analysis] or McFadden's $R^2$ [@mcfadden1977application]. To our knowledge our research is the first time anyone has proposed a variation of $R^2$ for models predicting an outcome in multiple dimensions---where each $\boldsymbol{y}_i$ is a vector. Multidimensional outcomes occur in settings such as modeling simultaneous equations or multivariate distributions. Our $R^2$ relies on a geometric interpretation of the standard definition of $R^2$ as seen in (\ref{eqn:r2def1}), below. 
+Several other pseudo $R^2$ measures have been developed for other use cases, such as Cox and Snell's $R^2$ [@cox1989analysis] or McFadden's $R^2$ [@mcfadden1977application]. To our knowledge our research is the first time anyone has proposed a variation of $R^2$ for models predicting an outcome in multiple dimensions---where each $\boldsymbol{y}_i$ is a vector. Multidimensional outcomes occur in settings such as modeling simultaneous equations or multivariate distributions. Our $R^2$ relies on a geometric interpretation of the standard definition of $R^2$. 
 
 In the unidimensional case, our $R^2$ calculation yeilds the same result as the traditional $R^2$, with the same properties. In the multidimensional case, there is no lower bound of zero but we argue that this does not negatively affect interpretation. This $R^2$ calculation in an R package [cite R], _mvrsquared_, available on CRAN. [cite CRAN] In this paper, we introduce the calculation, apply it to 3 multidimensional use cases, and describe use of the _mvrsquared_ package.
 
 # A Geometric Interpretation of $R^2$
-As review, the standard, and model free, definition of $R^2$ is
-
+Let $SSE$ denote the sum of squared errors and $SST$ be the total sum of squares. The standard, model free, definition of $R^2$ is then
 \begin{equation}
 \label{eqn:r2def1}
 R^2 
 \equiv 1 - \frac{SSE}{SST} = 1 - 
-\frac{\sum_{i=1}^n{(\hat{y}_i-y_i)^2}}{\sum_{i=1}^n{(y_i-\bar{y})^2}}
+\frac{\sum_{i=1}^n{(\hat{y}_i-y_i)^2}}{\sum_{i=1}^n{(y_i-\bar{y})^2}}.
 \end{equation} 
+Each $y_i$ is an observed outcome, $\hat{y}_i$ is the model-based prediction for that outcome, and $\bar{y}$ is the mean outcome across all observations. 
 
-Where each $y_i$ is an observed outcome, $\hat{y}_i$ is the prediction for that outcome, and $\bar{y}$ is the mean outcome across all observations. $SSE$ is known as the "sum of squared errors" and $SST$ is the "total sum of squares." 
-
-$SSE$ and $SST$ may be viewed as a sum of squared Euclidean distances in $\mathbb{R}_1$. Using this observation and letting $d(p,q) = \sqrt{(p - q)^2}$, for one dimension, and $d(\boldsymbol{p},\boldsymbol{q}) = \sqrt{\sum_{j=1}^N(p_j - q_j)^2}$, for $N$ dimensions, denote the euclidean distance between $p$ and $q$, we may rewrite (\ref{eqn:r2def1}) as
-
+$SSE$ and $SST$ may be viewed as a sum of squared Euclidean distances in $\mathbb{R}_1$. Letting $d(p,q) = \sqrt{(p - q)^2}$ for scalar quantities $p$ and $q$, Equation~\eqref{eqn:r2def1} can be re-expressed as
+\begin{equation}
+\label{eqn:r21D}
+R^2 
+\equiv \frac{\sum_{i=1}^n{d(y_i, \hat{y})^2}}{\sum_{i=1}^n{d(y_i,\bar{y})^2}}.
+\end{equation} 
+Generalizing to $M$ dimensions, the Euclidean distance becomes $d(\boldsymbol{p},\boldsymbol{q}) = \sqrt{\sum_{j=1}^N(p_j - q_j)^2}$ where $p_j$ and $q_j$ are the $j$th elements of the vectors $\boldsymbol{p}$ and $\boldsymbol{q}$, respectively. Equation~\eqref{eqn:r21D} is straight-forward to generalize to the $M$ dimensional case. Let $\boldsymbol{y}_i$ and $\hat{\boldsymbol{y}}_i$ be the $M$-dimensional vectors of observed outcomes and predictions for response $i$. We may rewrite Equation~\eqref{eqn:r2D1} as
 \begin{align}
 \label{eqn:r2def2}
-R^2 \equiv 1 - \frac{\sum_{i=1}^N d(y_i, \hat{y}_i)^2}{\sum_{i=1}^N d(y_i,\bar{y})^2}
-= 1 - \frac{\sum_{i=1}^N d(y_i, \hat{y}_i)^2}{\sum_{i=1}^N d(y_i,\bar{y})^2}
+R^2 \equiv 
+= 1 - \frac{\sum_{i=1}^n d(\boldsymbol{y}_i, \hat{\boldsymbol{y}}_i)^2}{\sum_{i=1}^n d(\boldsymbol{y}_i,\bar{\boldsymbol{y}})^2},
 \end{align}
-
-Using the definition in (\ref{eqn:r2def2}) it's easy to see how to generalize $R^2$ for outcomes in $\mathbb{R}_N$.
+where $\bar{\boldsymbol{y}}$ is the $M\times 1$ average vector, averaging across all responses.
 
 Fig. 1 visualizes the geometric interpretation of $R^2$ for outcomes in $\mathbb{R}_2$. The left image represents $SST$: the red dots are data points ($\boldsymbol{y}_i$); the black dot is the vector of means ($\bar{\boldsymbol{y}}$); the line segments represent the Euclidean distance from each $\boldsymbol{y}_i$ to $\bar{\boldsymbol{y}}$. $SST$ is obtained by squaring the length of each line segment and then adding the squared segments together. The right image represents $SSE$: the blue dots are the fitted values ($\hat{\boldsymbol{y}}_i$); the line segments represent the Euclidean distance from each $\hat{\boldsymbol{y}}_i$ to its corresponding $\boldsymbol{y}_i$. $SSE$ is obtained by squaring the length of each line segment and then adding the squared segments together.
 
@@ -106,26 +108,38 @@ for(j in 1:nrow(mymat)){
 
 
 ## Properties of $R^2$ for Multidimensional Outcomes
-$R^2$ for multidimensional outcomes is maximized at one---representing perfect predictions. It does not have a lower bound, as can be the case in certain circumstances with tradtional $R^2$ [@barten1987] [@windmeijer1997]. Its interpretation remains straightforward even without a lower bound. When $R^2 = 0$, then $SSE = SST$ and the model is no better than guessing the mean outcome. So negative values of $R^2$ mean the model is _worse_ than guessing the mean outcome for every observation. 
+$R^2$ for multidimensional outcomes is maximized at one---representing perfect predictions. This can be observed by setting $\boldsymbol{y}_i = \hat{\boldsymbol{y}}_i\ \forall\ i$. It does not have a lower bound, as can be the case in certain circumstances with tradtional $R^2$ [@barten1987,@windmeijer1997]. Its interpretation remains straightforward even without a lower bound. When $R^2 = 0$, then $SSE = SST$ and the model is no better than guessing the mean outcome. Negative values of $R^2$ mean the model is worse than guessing the mean outcome for every observation. 
 
-The $R^2$ given in (\ref{eqn:r2def2}) is sensitive to the scale of the dimensions of $\boldsymbol{Y}$. This is a common property of Euclidean distance, exacerbated by squaring. Possible mitigating steps may be standardizing the columns of $\boldsymbol{Y}$ before modeling or standardinzing both the columns of $\boldsymbol{Y}$ and $\hat{\boldsymbol{Y}}$ after modeling. When one standardizes may lead to different results, an exploration of which is out of scope for this note.
+The $R^2$ given in (\ref{eqn:r2def2}) is sensitive to the scale of the dimensions of the $\boldsymbol{Y}$, the $n\times M$ matrix of responses. This is a common property of Euclidean distance, exacerbated by squaring. Possible mitigating steps include standardizing the columns of $\boldsymbol{Y}$ before modeling or standardinzing both the columns of $\boldsymbol{Y}$ and $\hat{\boldsymbol{Y}}$ after modeling. Results may differ between $R^2$ values calculated on standardized vs non-standardized responses, although we do not explore this in this manuscript.
 
 # Applications
 
-We demonstrate the use of $R^2$ on multidimensional on three use cases: X, Y, and probabilistic topic modeling.
+We demonstrate the use of $R^2$ on multidimensional on four use cases: two multivariate regression models with varying values of $M$ and scalar covariates, a function-on-function regression model, and a probabilistic topic modeling. In the regression contexts, we employ the multivariate $R^2$ to conduct a simplified model selection for the purpose of illustration.
 
-## Mark's first Example
+## Bivariate Response
 
-words
+@Rudorfer1982 discusses a small dataset of 17 participants who experienced an overdose of the drug amitriptyline, a tricyclic antidepressant (TCAD) used to treat depression in adults. Since patients may be on multiple antidepressants, the bivariate outcomes of interest are the total TCAD plasma level in the blood and the amount of amitriptyline present in TCAD plasma levels. Potential covariates include sex, amount of antidepressants taken at time of overdose, the PR wave measurement from an electrocardiogram (ECG), diastolic blood pressure, and the QRS wave measurement from an ECG. The primary covariate of interest is the amount of antidepressants taken, so our model selection begins with that variable. We then consider two covariate, three covariate, four covariate, and, if necessary, five covariate models. The base model for the three covariate and four covariate models is the model with the highest percent change from the previous stage's best model. Thus the two covariate model that provided the largest increase in $R^2$ from the model with amount alone is the base model for the three covariate model, and so forth. These results are in Table~\ref{t:bivar}.
 
-## Mark's second example
+Discuss results here.
 
-words
+## Response with $M = 4$
+
+In their text on Multivariate Analysis, @JohnsonWichern2007 describe a dataset on paper manufacturing. There are four outcomes of interest: break length, elastic modulus, stress at failure, and burst strength. Covariates include the properties of pulp fibers: arithmetic fiber length, long fiber fraction, fine fiber fraction, and zero span tensile. We consider a similar model selection approach to the bivariate case, but because there is no primary covariate of interest, we first fit all single covariate models, selecting the one with the highest $R^2$ as the base model for the two covariate models. Table~\ref{t:M4} contains the results of our model selection process.
+
+Discuss results here.
+
+## Function-on-function Regression
+
+Function-on-function regression (FFR) is a regression framework where both the response and the predictor (or predictors) are functions of time. The time domains need not necessarily align, although for a subclass of FFR models there is a requirement that measurements in predictor occur before or at least concurrently with the response. This subclass of models is referred to as a Historical Functional Linear Model (HFLM). FFR models can include predictors with unrestricted time domains. The relationship between such predictors and the response is described by a surface. When a restriction is imposed for the historical relationship in an HFLM, the surface is truncated to at most the upper triangular region---although other forms of constraint are possible. For more on FFRs and HFLMs, please see the review articles by @Morris2015 and @Meyer2023, respectively.
+
+For this illustration, we consider data from a linguistical study on movement of the bottom lip when a participant says the word ``bob.'' The data was modeled using an HFLM by @Malfait2003 in their seminal work on the modeling class. For our analysis, the outcome of interest is the position of the lip with possible functional covariates including the acceleration of the lip and an electromyography (EMG) taken during the experiment. Acceleration as a covariate may have a bidirectional relationship in time with position, thus we treat this as an unrestricted functional covariate. The electrical signals measured by the EMG, however, occur before or at most concurrently with the position. Thus, we model this covariate using a historical effect. Table~\ref{t:ffr} contains the results from this illustration.
+
+Discuss results here.
 
 ## Probabilistic Topic Modeling
 Topic models predict the frequencies of word occurrences across a corpus of documents using latent variables called "topics". Arguably the most famous such model is Latent Dirichlet Allocation (LDA) [cite]. LDA uses a Bayesian probability model to fit topics. In a probabilistic topic modeling framework, $\boldsymbol{Y}$ is a matrix of integers whose $i,j$ entries give the count of word $j$ in document $i$. Under the model, the $i$-th prediction is given by  $\hat{\boldsymbol{y}}_i = n_i \boldsymbol{\theta}_i \cdot \boldsymbol{B}$. Where $\boldsymbol{B}$ is a matrix of latent topic distributions and $\boldsymbol{\theta}_i$ a vector of topic frequencies in the $i$-th document. 
 
-We model 100 and 150 scientific topics from the abstracts of $20,766$  of Small Business Innovation Research (SBIR) grants awarded between 2020 and 2022. After applying common text pre-processing steps, the data set contains $21,397$ unique words and $2,975,409$ word occurrences. The final results are $R^2 = 0.153$ and $R^2 = 0.179$ for the 100 and 150-topic models, respectively. Modeling is done with the `tidylda` package [cite] and with help from the `tidytext` [cite] and the `tidyverse` [cite] packages. `tidylda` calculates $R^2$ by calling `mvrsquared`. 
+We model 100 and 150 scientific topics from the abstracts of $20,766$  of Small Business Innovation Research (SBIR) grants awarded between 2020 and 2022. After applying common text pre-processing steps (\emph{TJ: add a few details here}), the data set contains $21,397$ unique words and $2,975,409$ word occurrences. The final results are $R^2 = 0.153$ and $R^2 = 0.179$ for the 100 and 150-topic models, respectively. Modeling is done with the `tidylda` package [cite] and with help from the `tidytext` [cite] and the `tidyverse` [cite] packages. `tidylda` calculates $R^2$ by calling `mvrsquared`. 
 
 # The _mvrsquared_ Package
 We have included our $R^2$ calculation in a package, `mvrsquared`, now available on CRAN. `mvrsquared` contains a single function, `calc_rsquared`, whose arguments are as follows:
@@ -136,7 +150,7 @@ We have included our $R^2$ calculation in a package, `mvrsquared`, now available
 * `return_ss_only` is a logical and controls whether the function returns $R^2$ or $SSE$ and $SST$. Details are described below.
 * `threads` is the number of parallel threads the user wants to use for scaling to large data sets.
 
-A simple example of using `mvrsquared` to calculate $R^2$ for univariate data is below. We use univariate data (and the famous `mtcars` dataset) for familarity.
+A simple example of using `mvrsquared` to calculate $R^2$ for univariate data is below. We use univariate data and the dataset `mtcars` for familiarity.
 
 ```{r echo = TRUE}
 library(mvrsquared)
@@ -194,7 +208,7 @@ However, the difference is tiny. Below demonstrates that they are the same up to
 round(r2_mv2, 14) == round(r2_lm, 14)
 ```
 
-`mvrsquared` uses the `RcppThread` package for parallelism. [cite] Users tune this behavior with the `threads` argument. In the case where a user has large data but the data isn't so large that it needs to be distributed across machines, setting `threads` to a value greater than one speeds up the calculation. However, in the scenario where the data may be too large to fit one one machine, users can chop up the calculation themselves for cluster computing, set `return_ss_only` equal to `TRUE`, and then re-combine the results into $R^2$ using $1 - \frac{SSE}{SST}$ and obtaining $SSE$ and $SST$ by summing the intermediate results returned by each node. However if goes this route, they MUST pre-calculate `ybar` and pass it to the function to be used in each node. If the user does not, SST will be calculated based on means of each batch independently and the resulting r-squared will be incorrect. Below is a trivial example for illustration using `lapply` instead of proper cluster computing.
+`mvrsquared` uses the `RcppThread` package for parallelism. [cite] Users tune this behavior with the `threads` argument. In the case where a user has large data---but not so large that it needs to be distributed across machines---setting `threads` to a value greater than one speeds up the calculation. However, in the scenario where the data may be too large to fit one one machine, users can chop up the calculation themselves for cluster computing, set `return_ss_only` equal to `TRUE`, and then re-combine the results into $R^2$ using $1 - \frac{SSE}{SST}$ and obtaining $SSE$ and $SST$ by summing the intermediate results returned by each node. However if goes this route, they must pre-calculate `ybar` and pass it to the function to be used in each node. If the user does not, SST will be calculated based on means of each batch independently and the resulting r-squared will be incorrect. Below is a trivial example for illustration using `lapply` instead of proper cluster computing.
 
 ```{r echo = TRUE}
 
@@ -247,7 +261,9 @@ r2_mapreduce
 # Discussion
 Viewing $R^2$ as a ratio of distances motivates a new direction for extended definitions of $R^2$. Researchers may wish to explore $R^2$ calculations based other distance measures more appropriate for other settings. For example, if one's model estimates probabilities perhaps Hellinger distance [@hellinger1909new] would be more appropriate. If scale between outcome variables is of concern, maybe an $R^2$ leveraging Mahalanobis distance [@mahalanobis] has advantage over variable normalization as discussed above. 
 
-We have shown that $R^2$ can be calculated for multivariate outcomes from a geometric interpretation of (\ref{eqn:r2def1}). Since we use the standard definition of $R^2$, this approach does not alter existing issues motivating alternate definitions of $R^2$ for, e.g., Bayesian models or nonlinear models. It is worth noting that scale differences in outcome variables can swamp the calculation. We leave an exploration of remediation strategies to future work. We have implemented the $R^2$ metric in (\ref{eqn:r2euclidean}) in a package for the R programming language called `mvrsquared` [@mvrsquared].
+We have shown that $R^2$ can be calculated for multivariate outcomes from a geometric interpretation of (\ref{eqn:r2def1}). Since we use the standard definition of $R^2$, this approach does not alter existing issues motivating alternate definitions of $R^2$ for, e.g., Bayesian models or nonlinear models. It is worth noting that scale differences in outcome variables can swamp (\emph{TJ: meeaning?}) the calculation. We leave an exploration of remediation strategies to future work. We have implemented the $R^2$ metric in (\ref{eqn:r2euclidean}) in a package for the R programming language called `mvrsquared` [@mvrsquared].
+
+Our multivariate $R^2$ can be used in a number of subfields, some with currently limited model selection tools. In functional regression, various authors have proposed $R^2$-like metrics, see for example approaches taken by @Malfait2003, @Harezlak2007, @Meyer2015, and references therein. However, there is no generally agreed upon form for the functional $R^2$. Our approach adds to this literature with an alternative that has the added benefit of simplifying to the univariate $R^$ when $M = 1$. (\emph{TJ: add discussion of lack of model selection tools in topic models})
 
 \newpage{}
 # References
