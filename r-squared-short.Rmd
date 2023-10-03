@@ -4,11 +4,12 @@ author:
   - Tommy Jones^[Dept. of Computational and Data Sciences, George Mason University]
   - Mark Meyer^[Dept. of Mathematics and Statistics, Georgetown University]
 date: "`r Sys.Date()`"
-bibliography: [r2.bib, manual.bib]
+bibliography: [r2.bib]
 header-includes:
     - \usepackage{setspace}\doublespacing
     - \usepackage[utf8]{inputenc}
     - \usepackage[T1]{fontenc}
+    - \usepackage{amsmath}
 output:
   pdf_document:
     number_sections: true
@@ -21,59 +22,35 @@ options(tinytex.verbose = TRUE)
 ```
 
 # Introduction
-The coefficient of determination---$R^2$---is the most popular goodness of fit metric for linear models. It has appealing properties such as a lower bound of zero, an upper bound of one, and interpretable as the proportion of varience in the outcome accounted for by the model. $R^2$'s appeal is such that nearly all statistical software reports $R^2$ by default when fitting linear models.
+The coefficient of determination---$R^2$---is the most popular goodness of fit metric for linear models. It has appealing properties such as a lower bound of zero, an upper bound of one, and interpretable as the proportion of varience in the outcome accounted for by the model. $R^2$'s appeal is so strong that nearly all statistical software reports $R^2$ by default when fitting linear models.
 
-The standard, and model free, definition of $R^2$ is
+Several other pseudo $R^2$ measures have been developed for other use cases, such as Cox and Snell's $R^2$ [@cox1989analysis] or McFadden's $R^2$ [@mcfadden1977application]. To our knowledge our research is the first time anyone has proposed a variation of $R^2$ for models predicting an outcome in multiple dimensions---where each $\boldsymbol{y}_i$ is a vector. Multidimensional outcomes occur in settings such as modeling simultaneous equations or multivariate distributions. Our $R^2$ relies on a geometric interpretation of the standard definition of $R^2$ as seen in (\ref{eqn:r2def1}), below. 
 
-\begin{equation}
-  \label{eqn:r2def1}
-    R^2 
-      \equiv 1 - \frac{SS_{resid.}}{SS_{tot.}}
-\end{equation} 
-
-or equivalently
-
-\begin{equation}
-  \label{eqn:r2def2}
-    R^2 
-      \equiv 1 - \frac{\sum_{i=1}^N{(\hat{y}_i-y_i)^2}}{\sum_{i=1}^N{(y_i-\bar{y})^2}}
-\end{equation} 
-
-In (\ref{eqn:r2def1}) $SS_{resid.}$ is called the _residual sum of squares_ and $SS_{tot.}$ is called the _total sum of squares_. And in (\ref{eqn:r2def2}) $\bar{y}$ is the sample mean and $\hat{y}_i$ is the value predicted for observation $y_i$. 
-
-The definitions in In (\ref{eqn:r2def1}) and (\ref{eqn:r2def2}) are "model free" but they are alegebraically equivalent to
-
-\begin{equation}
-  \label{eqn:r2var}
-    R^2 
-      = \frac{\frac{1}{N - 1} \sum_{i=1}^N (\hat{y}_i - \bar{y})^2}{\frac{1}{N - 1} \sum_{i=1}^N (y_i - \bar{y})^2}
-\end{equation} 
-
-For a linear model, equation (\ref{eqn:r2var}) is the proportion of variance in $y$ accounted for by the model. Researchers have used and extended the variance relationship in (\ref{eqn:r2var}) to develop $R^2$ metrics for a range of models such as logistic regression [@hu2006], mixed models [@piepho2019], Bayesian regression models [@gelman2018r2], and more.
-
-To our knowledge our research is the first time anyone has proposed a variation of $R^2$ for models predicting an outcome in multiple dimensions---where each $\boldsymbol{y}_i$ is a vector and $\boldsymbol{Y}$ is a matrix. Multidimensional outcomes occur in settings such as modeling simultaneous equations or multivariate distributions. Our $R^2$ relies on a geometric interpretation of (\ref{eqn:r2def1}). As a result, it is also model free. 
+In the unidimensional case, our $R^2$ calculation yeilds the same result as the traditional $R^2$, with the same properties. In the multidimensional case, there is no lower bound of zero but we argue that this does not negatively affect interpretation. This $R^2$ calculation in an R package [cite R], _mvrsquared_, available on CRAN. [cite CRAN] In this paper, we introduce the calculation, apply it to 3 multidimensional use cases, and describe use of the _mvrsquared_ package.
 
 # A Geometric Interpretation of $R^2$
-The numerator and denominator in (\ref{eqn:r2def2}) may be viewed as sums of squared Euclidean distances in $\mathbb{R}_1$. Specifically, $SS_{tot.}$ is the total squared-Euclidean distance from each $y_i$ to the mean outcome, $\bar{y}$. Then $SS_{resid.}$ is the total squared-Euclidean distance from each $y_i$ to its predicted value under the model, $\hat{y}_i$.
-
-As a reminder, for any two points $\boldsymbol{p}, \boldsymbol{q} \in \mathbb{R}_M$, the Euclidean distance between $\boldsymbol{p}$ and $\boldsymbol{q}$ is 
+As review, the standard, and model free, definition of $R^2$ is
 
 \begin{equation}
-  \label{eqn:euclidean}
-	d(\boldsymbol{p},\boldsymbol{q}) = \sqrt{\sum_{i=1}^M{(p_i - q_i)^2}}
-\end{equation}
+\label{eqn:r2def1}
+R^2 
+\equiv 1 - \frac{SSE}{SST} = 1 - 
+\frac{\sum_{i=1}^n{(\hat{y}_i-y_i)^2}}{\sum_{i=1}^n{(y_i-\bar{y})^2}}
+\end{equation} 
 
-Using the notation from (\ref{eqn:euclidean}), we can rewrite (\ref{eqn:r2def1}) and (\ref{eqn:r2def2}) as
+Where each $y_i$ is an observed outcome, $\hat{y}_i$ is the prediction for that outcome, and $\bar{y}$ is the mean outcome across all observations. $SSE$ is known as the "sum of squared errors" and $SST$ is the "total sum of squares." 
 
-\begin{equation}
-  \label{eqn:r2euclidean}
-  R^2
-    = 1 - \frac{\sum_{i=1}^N d(\boldsymbol{y}_i, \hat{\boldsymbol{y}}_i)^2}{\sum_{i=1}^N d(\boldsymbol{y}_i, \bar{\boldsymbol{y}})^2}
-\end{equation}
+$SSE$ and $SST$ may be viewed as a sum of squared Euclidean distances in $\mathbb{R}_1$. Using this observation and letting $d(p,q) = \sqrt{(p - q)^2}$, for one dimension, and $d(\boldsymbol{p},\boldsymbol{q}) = \sqrt{\sum_{j=1}^N(p_j - q_j)^2}$, for $N$ dimensions, denote the euclidean distance between $p$ and $q$, we may rewrite (\ref{eqn:r2def1}) as
 
-Equation (\ref{eqn:r2euclidean}) extends $R^2$ to cover outcomes in $\mathbb{R}_M$ while preserving the calculation from (\ref{eqn:r2def2}) for outcomes in $\mathbb{R}_1$. 
+\begin{align}
+\label{eqn:r2def2}
+R^2 \equiv 1 - \frac{\sum_{i=1}^N d(y_i, \hat{y}_i)^2}{\sum_{i=1}^N d(y_i,\bar{y})^2}
+= 1 - \frac{\sum_{i=1}^N d(y_i, \hat{y}_i)^2}{\sum_{i=1}^N d(y_i,\bar{y})^2}
+\end{align}
 
-Fig. 1 visualizes the geometric interpretation of $R^2$ for outcomes in $\mathbb{R}_2$. The left image represents $SS_{tot.}$: the red dots are data points ($\boldsymbol{y}_i$); the black dot is the vector of means ($\bar{\boldsymbol{y}}$); the line segments represent the Euclidean distance from each $\boldsymbol{y}_i$ to $\bar{\boldsymbol{y}}$. $SS_{tot.}$ is obtained by squaring the length of each line segment and then adding the squared segments together. The right image represents $SS_{resid.}$: the blue dots are the fitted values ($\hat{\boldsymbol{y}}_i$); the line segments represent the Euclidean distance from each $\hat{\boldsymbol{y}}_i$ to its corresponding $\boldsymbol{y}_i$. $SS_{resid.}$ is obtained by squaring the length of each line segment and then adding the squared segments together.
+Using the definition in (\ref{eqn:r2def2}) it's easy to see how to generalize $R^2$ for outcomes in $\mathbb{R}_N$.
+
+Fig. 1 visualizes the geometric interpretation of $R^2$ for outcomes in $\mathbb{R}_2$. The left image represents $SST$: the red dots are data points ($\boldsymbol{y}_i$); the black dot is the vector of means ($\bar{\boldsymbol{y}}$); the line segments represent the Euclidean distance from each $\boldsymbol{y}_i$ to $\bar{\boldsymbol{y}}$. $SST$ is obtained by squaring the length of each line segment and then adding the squared segments together. The right image represents $SSE$: the blue dots are the fitted values ($\hat{\boldsymbol{y}}_i$); the line segments represent the Euclidean distance from each $\hat{\boldsymbol{y}}_i$ to its corresponding $\boldsymbol{y}_i$. $SSE$ is obtained by squaring the length of each line segment and then adding the squared segments together.
 
 ```{r geometric_graphic, fig.cap = "Visualizing the geometric interpretation of R-squared. Sum up the squared length of each line segment for the total (left) or residual (right) sums of squares. This figure corresponds to an R-squared of 0.87", fig.asp = .55}
 set.seed("8675309")
@@ -91,15 +68,15 @@ mymat$y2bar <- mean(mymat$y2)
 
 # Calculate sums of squares
 ssres <- sapply(1:nrow(mymat), function(j){
-    (mymat$y1[ j ] -mymat$y1hat[ j ])^2 + (mymat$y2[ j ] - mymat$y2hat[ j ])^2
+  (mymat$y1[ j ] -mymat$y1hat[ j ])^2 + (mymat$y2[ j ] - mymat$y2hat[ j ])^2
 })
 
 sst <- sapply(1:nrow(mymat), function(j){
-    (mymat$y1[ j ] -mymat$y1bar[ j ])^2 + (mymat$y2[ j ] - mymat$y2bar[ j ])^2
+  (mymat$y1[ j ] -mymat$y1bar[ j ])^2 + (mymat$y2[ j ] - mymat$y2bar[ j ])^2
 })
 
 ssm <- sapply(1:nrow(mymat), function(j){
-    (mymat$y1bar[ j ] -mymat$y1hat[ j ])^2 + (mymat$y2bar[ j ] - mymat$y2hat[ j ])^2
+  (mymat$y1bar[ j ] -mymat$y1hat[ j ])^2 + (mymat$y2bar[ j ] - mymat$y2hat[ j ])^2
 })
 
 # plot those suckers
@@ -111,7 +88,7 @@ plot(mymat[ , c("y1", "y2" ) ], yaxt="n", xaxt="n", pch=19, col=rgb(1,0,0,0.5),
      main="Total Sum of Squares")
 points(mymat[ , c("y1bar", "y2bar") ], pch=19)
 for(j in 1:nrow(mymat)){
-    lines(c(mymat$y1[ j ],mymat$y1bar[ j ]), c(mymat$y2[ j ],mymat$y2bar[ j ]))
+  lines(c(mymat$y1[ j ],mymat$y1bar[ j ]), c(mymat$y2[ j ],mymat$y2bar[ j ]))
 }
 
 
@@ -121,19 +98,151 @@ plot(mymat[ , c("y1", "y2" ) ], yaxt="n", xaxt="n", pch=19, col=rgb(1,0,0,0.5),
      main="Residual Sum of Squares")
 points(mymat[ , c("y1hat", "y2hat") ], pch=17, col=rgb(0,0,1,0.5))
 for(j in 1:nrow(mymat)){
-    lines(c(mymat$y1[ j ],mymat$y1hat[ j ]), c(mymat$y2[ j ],mymat$y2hat[ j ]))
+  lines(c(mymat$y1[ j ],mymat$y1hat[ j ]), c(mymat$y2[ j ],mymat$y2hat[ j ]))
 }
 
 # 1 - sum(ssres)/sum(sst)
 ```
 
 
-# Properties 
-You can view the $R^2$ in (\ref{eqn:r2euclidean}) as the proportion of total squared distance from each observation to its mean that is accounted for by the model, similar to the "proportion of explained variance" interpretation. 
+## Properties of $R^2$ for Multidimensional Outcomes
+$R^2$ for multidimensional outcomes is maximized at one---representing perfect predictions. It does not have a lower bound, as can be the case in certain circumstances with tradtional $R^2$ [@barten1987] [@windmeijer1997]. Its interpretation remains straightforward even without a lower bound. When $R^2 = 0$, then $SSE = SST$ and the model is no better than guessing the mean outcome. So negative values of $R^2$ mean the model is _worse_ than guessing the mean outcome for every observation. 
 
-This $R^2$ is maximized at one---representing perfect predictions. Unlike traditional $R^2$, it does not have a lower bound, as can be the case in certain circumstances with tradtional $R^2$ [@barten1987] [@windmeijer1997]. Losing the lower bound of zero does not negatively impact interpretation. When $R^2 = 0$, then $SS_{resid.} = SS_{tot.}$; the model is no better than guessing the mean outcome. So negative values of $R^2$ mean the model is _worse_ than guessing the mean outcome for every observation. Its interpretation remains straightforward.
+The $R^2$ given in (\ref{eqn:r2def2}) is sensitive to the scale of the dimensions of $\boldsymbol{Y}$. This is a common property of Euclidean distance, exacerbated by squaring. Possible mitigating steps may be standardizing the columns of $\boldsymbol{Y}$ before modeling or standardinzing both the columns of $\boldsymbol{Y}$ and $\hat{\boldsymbol{Y}}$ after modeling. When one standardizes may lead to different results, an exploration of which is out of scope for this note.
 
-The $R^2$ given in (\ref{eqn:r2euclidean}) is sensitive to the scale of the dimensions of $\boldsymbol{Y}$. This is a common property of Euclidean distance, exacerbated by squaring. Possible mitigating steps may be standardizing the columns of $\boldsymbol{Y}$ before modeling or standardinzing both the columns of $\boldsymbol{Y}$ and $\hat{\boldsymbol{Y}}$ after modeling. When one standardizes may lead to different results, an exploration of which is out of scope for this note.
+# Applications
+
+We demonstrate the use of $R^2$ on multidimensional on three use cases: X, Y, and probabilistic topic modeling.
+
+## Mark's first Example
+
+words
+
+## Mark's second example
+
+words
+
+## Probabilistic Topic Modeling
+Topic models predict the frequencies of word occurrences across a corpus of documents using latent variables called "topics". Arguably the most famous such model is Latent Dirichlet Allocation (LDA) [cite]. LDA uses a Bayesian probability model to fit topics. In a probabilistic topic modeling framework, $\boldsymbol{Y}$ is a matrix of integers whose $i,j$ entries give the count of word $j$ in document $i$. Under the model, the $i$-th prediction is given by  $\hat{\boldsymbol{y}}_i = n_i \boldsymbol{\theta}_i \cdot \boldsymbol{B}$. Where $\boldsymbol{B}$ is a matrix of latent topic distributions and $\boldsymbol{\theta}_i$ a vector of topic frequencies in the $i$-th document. 
+
+We model 100 and 150 scientific topics from the abstracts of $20,766$  of Small Business Innovation Research (SBIR) grants awarded between 2020 and 2022. After applying common text pre-processing steps, the data set contains $21,397$ unique words and $2,975,409$ word occurrences. The final results are $R^2 = 0.153$ and $R^2 = 0.179$ for the 100 and 150-topic models, respectively. Modeling is done with the `tidylda` package [cite] and with help from the `tidytext` [cite] and the `tidyverse` [cite] packages. `tidylda` calculates $R^2$ by calling `mvrsquared`. 
+
+# The _mvrsquared_ Package
+We have included our $R^2$ calculation in a package, `mvrsquared`, now available on CRAN. `mvrsquared` contains a single function, `calc_rsquared`, whose arguments are as follows:
+
+* `y` is the true outcome. This must be a numeric vector, numeric matrix, or coercible to a sparse matrix of class `dgCMatrix`.
+* `yhat`is the predicted outcome, a vector or matrix, or a list of two matrices whose dot product makes the predicted outcome.
+* `ybar`is the mean of `y` and must be a numeric vector for multidimensional outcomes or a scaler for a traditional $R^2$ calculation.
+* `return_ss_only` is a logical and controls whether the function returns $R^2$ or $SSE$ and $SST$. Details are described below.
+* `threads` is the number of parallel threads the user wants to use for scaling to large data sets.
+
+A simple example of using `mvrsquared` to calculate $R^2$ for univariate data is below. We use univariate data (and the famous `mtcars` dataset) for familarity.
+
+```{r echo = TRUE}
+library(mvrsquared)
+
+data(mtcars)
+
+# fit a linear model
+f <- lm(mpg ~ cyl + disp + hp + wt, data = mtcars)
+
+# extract r-squared for comparison
+f_summary <- summary(f)
+
+r2_lm <- f_summary$r.squared
+
+r2_lm
+
+# calculate univariate r-squared using mvrsquared
+r2_mv <- calc_rsquared(y = mtcars$mpg, yhat = f$fitted.values)
+
+r2_mv
+
+# just to be 100% sure...
+r2_lm == r2_mv
+```
+
+When a user wishes to calculate $R^2$, they may either pass `yhat` as matrix (or single vector in the univariate case) of predictions, or they may pass a list with two matrices: `x`, data for the predictor variables, and `w` the linear weights or coefficients of the model. Under the hood, `mvrsquared` will multiply `x` and `w` to obtain `yhat`. (Note that using this method is only valid if a user's model is a linear one.)
+
+```{r echo = TRUE}
+x <- cbind(1, f$model[, -1]) # note, you have to add 1's for the intercept and
+                             # I'm removing the first column of f$model as it
+                             # is the outcome we are predicting
+
+x <- as.matrix(x) # x needs to be a matrix, not a data.frame or tibble 
+
+w <- matrix(f$coefficients, ncol = 1) # w also has to be a matrix
+
+# this calculates yhat as the dot product x %*% w
+r2_mv2 <- calc_rsquared(y = mtcars$mpg, 
+                        yhat = list(x = x,
+                                    w = w))
+
+r2_mv2
+```
+
+Calculating R-squared this way does lead to a tiny difference in calculation due to numeric precision.
+
+```{r echo = TRUE}
+r2_mv2 == r2_lm
+```
+
+However, the difference is tiny. Below demonstrates that they are the same up to 14 decimal places in this example.
+
+
+```{r echo = TRUE}
+round(r2_mv2, 14) == round(r2_lm, 14)
+```
+
+`mvrsquared` uses the `RcppThread` package for parallelism. [cite] Users tune this behavior with the `threads` argument. In the case where a user has large data but the data isn't so large that it needs to be distributed across machines, setting `threads` to a value greater than one speeds up the calculation. However, in the scenario where the data may be too large to fit one one machine, users can chop up the calculation themselves for cluster computing, set `return_ss_only` equal to `TRUE`, and then re-combine the results into $R^2$ using $1 - \frac{SSE}{SST}$ and obtaining $SSE$ and $SST$ by summing the intermediate results returned by each node. However if goes this route, they MUST pre-calculate `ybar` and pass it to the function to be used in each node. If the user does not, SST will be calculated based on means of each batch independently and the resulting r-squared will be incorrect. Below is a trivial example for illustration using `lapply` instead of proper cluster computing.
+
+```{r echo = TRUE}
+
+
+batch_size <- 10
+
+batches <- lapply(X = seq(1, nrow(mtcars), by = batch_size),
+                    FUN = function(b){
+                      
+                      # rows to select on
+                      rows <- b:min(b + batch_size - 1, nrow(mtcars))
+                      
+                      # rows of the dtm
+                      y_batch <- mtcars$mpg[rows]
+                      
+                      # rows of theta multiplied by document length
+                      x_batch <- x[rows, ]
+                      
+                      list(y = y_batch,
+                           x = x_batch)
+                    })
+
+
+# calculate ybar for the data
+# in this case, lazily doing colMeans, but you could divide this problem up too
+ybar <- mean(mtcars$mpg)
+
+# MAP: calculate sums of squares
+ss <- lapply(X = batches,
+               FUN = function(batch){
+                 calc_rsquared(y = batch$y,
+                               yhat = list(x = batch$x, w = w),
+                               ybar = ybar,
+                               return_ss_only = TRUE)
+               })
+
+
+# REDUCE: get SST and SSE by summation
+ss <- do.call(rbind, ss) 
+
+ss <- colSums(ss)
+
+r2_mapreduce <- 1 - ss["sse"] / ss["sst"]
+
+# should be the same as above
+r2_mapreduce
+```
+
 
 # Discussion
 Viewing $R^2$ as a ratio of distances motivates a new direction for extended definitions of $R^2$. Researchers may wish to explore $R^2$ calculations based other distance measures more appropriate for other settings. For example, if one's model estimates probabilities perhaps Hellinger distance [@hellinger1909new] would be more appropriate. If scale between outcome variables is of concern, maybe an $R^2$ leveraging Mahalanobis distance [@mahalanobis] has advantage over variable normalization as discussed above. 
