@@ -30,26 +30,32 @@ In the unidimensional case, our $R^2$ calculation yeilds the same result as the 
 
 # A Geometric Interpretation of $R^2$
 Let $SSE$ denote the sum of squared errors and $SST$ be the total sum of squares. The standard, model free, definition of $R^2$ is then
+
 \begin{equation}
-\label{eqn:r2def1}
-R^2 
-\equiv 1 - \frac{SSE}{SST} = 1 - 
-\frac{\sum_{i=1}^n{(\hat{y}_i-y_i)^2}}{\sum_{i=1}^n{(y_i-\bar{y})^2}}.
+    \label{eqn:r2def1}
+    R^2 
+        \equiv 1 - \frac{SSE}{SST} = 1 - 
+        \frac{\sum_{i=1}^n{(\hat{y}_i-y_i)^2}}{\sum_{i=1}^n{(y_i-\bar{y})^2}}.
 \end{equation} 
+
 Each $y_i$ is an observed outcome, $\hat{y}_i$ is the model-based prediction for that outcome, and $\bar{y}$ is the mean outcome across all observations. 
 
 $SSE$ and $SST$ may be viewed as a sum of squared Euclidean distances in $\mathbb{R}_1$. Letting $d(p,q) = \sqrt{(p - q)^2}$ for scalar quantities $p$ and $q$, Equation~\eqref{eqn:r2def1} can be re-expressed as
+
 \begin{equation}
-\label{eqn:r21D}
-R^2 
-\equiv \frac{\sum_{i=1}^n{d(y_i, \hat{y})^2}}{\sum_{i=1}^n{d(y_i,\bar{y})^2}}.
+    \label{eqn:r21D}
+    R^2 
+        \equiv \frac{\sum_{i=1}^n{d(y_i, \hat{y})^2}}{\sum_{i=1}^n{d(y_i,\bar{y})^2}}.
 \end{equation} 
+
 Generalizing to $M$ dimensions, the Euclidean distance becomes $d(\boldsymbol{p},\boldsymbol{q}) = \sqrt{\sum_{j=1}^N(p_j - q_j)^2}$ where $p_j$ and $q_j$ are the $j$th elements of the vectors $\boldsymbol{p}$ and $\boldsymbol{q}$, respectively. Equation~\eqref{eqn:r21D} is straight-forward to generalize to the $M$ dimensional case. Let $\boldsymbol{y}_i$ and $\hat{\boldsymbol{y}}_i$ be the $M$-dimensional vectors of observed outcomes and predictions for response $i$. We may rewrite Equation~\eqref{eqn:r2D1} as
+
 \begin{align}
-\label{eqn:r2def2}
-R^2 \equiv 
-= 1 - \frac{\sum_{i=1}^n d(\boldsymbol{y}_i, \hat{\boldsymbol{y}}_i)^2}{\sum_{i=1}^n d(\boldsymbol{y}_i,\bar{\boldsymbol{y}})^2},
+    \label{eqn:r2def2}
+    R^2 \equiv 
+        = 1 - \frac{\sum_{i=1}^n d(\boldsymbol{y}_i, \hat{\boldsymbol{y}}_i)^2}{\sum_{i=1}^n d(\boldsymbol{y}_i,\bar{\boldsymbol{y}})^2}
 \end{align}
+
 where $\bar{\boldsymbol{y}}$ is the $M\times 1$ average vector, averaging across all responses.
 
 Fig. 1 visualizes the geometric interpretation of $R^2$ for outcomes in $\mathbb{R}_2$. The left image represents $SST$: the red dots are data points ($\boldsymbol{y}_i$); the black dot is the vector of means ($\bar{\boldsymbol{y}}$); the line segments represent the Euclidean distance from each $\boldsymbol{y}_i$ to $\bar{\boldsymbol{y}}$. $SST$ is obtained by squaring the length of each line segment and then adding the squared segments together. The right image represents $SSE$: the blue dots are the fitted values ($\hat{\boldsymbol{y}}_i$); the line segments represent the Euclidean distance from each $\hat{\boldsymbol{y}}_i$ to its corresponding $\boldsymbol{y}_i$. $SSE$ is obtained by squaring the length of each line segment and then adding the squared segments together.
@@ -118,7 +124,7 @@ We demonstrate the use of $R^2$ on multidimensional on four use cases: two multi
 
 ## Bivariate Response
 
-@Rudorfer1982 discusses a small dataset of 17 participants who experienced an overdose of the drug amitriptyline, a tricyclic antidepressant (TCAD) used to treat depression in adults. Since patients may be on multiple antidepressants, the bivariate outcomes of interest are the total TCAD plasma level in the blood and the amount of amitriptyline present in TCAD plasma levels. Potential covariates include sex, amount of antidepressants taken at time of overdose, the PR wave measurement from an electrocardiogram (ECG), diastolic blood pressure, and the QRS wave measurement from an ECG. The primary covariate of interest is the amount of antidepressants taken, so our model selection begins with that variable. We then consider two covariate, three covariate, four covariate, and, if necessary, five covariate models. The base model for the three covariate and four covariate models is the model with the highest percent change from the previous stage's best model. Thus the two covariate model that provided the largest increase in $R^2$ from the model with amount alone is the base model for the three covariate model, and so forth. These results are in Table~\ref{t:bivar}.
+[@Rudorfer1982] discusses a small dataset of 17 participants who experienced an overdose of the drug amitriptyline, a tricyclic antidepressant (TCAD) used to treat depression in adults. Since patients may be on multiple antidepressants, the bivariate outcomes of interest are the total TCAD plasma level in the blood and the amount of amitriptyline present in TCAD plasma levels. Potential covariates include sex, amount of antidepressants taken at time of overdose, the PR wave measurement from an electrocardiogram (ECG), diastolic blood pressure, and the QRS wave measurement from an ECG. The primary covariate of interest is the amount of antidepressants taken, so our model selection begins with that variable. We then consider two covariate, three covariate, four covariate, and, if necessary, five covariate models. The base model for the three covariate and four covariate models is the model with the highest percent change from the previous stage's best model. Thus the two covariate model that provided the largest increase in $R^2$ from the model with amount alone is the base model for the three covariate model, and so forth. These results are in Table~\ref{t:bivar}.
 
 Discuss results here.
 
@@ -208,7 +214,7 @@ However, the difference is tiny. Below demonstrates that they are the same up to
 round(r2_mv2, 14) == round(r2_lm, 14)
 ```
 
-`mvrsquared` uses the `RcppThread` package for parallelism. [cite] Users tune this behavior with the `threads` argument. In the case where a user has large data---but not so large that it needs to be distributed across machines---setting `threads` to a value greater than one speeds up the calculation. However, in the scenario where the data may be too large to fit one one machine, users can chop up the calculation themselves for cluster computing, set `return_ss_only` equal to `TRUE`, and then re-combine the results into $R^2$ using $1 - \frac{SSE}{SST}$ and obtaining $SSE$ and $SST$ by summing the intermediate results returned by each node. However if goes this route, they must pre-calculate `ybar` and pass it to the function to be used in each node. If the user does not, SST will be calculated based on means of each batch independently and the resulting r-squared will be incorrect. Below is a trivial example for illustration using `lapply` instead of proper cluster computing.
+`mvrsquared` uses the `RcppThread` package for parallelism. [cite] Users tune this behavior with the `threads` argument. In the case where a user has large data---but not so large that it needs to be distributed across machines---setting `threads` to a value greater than one speeds up the calculation. However, in the scenario where the data may be too large to fit one one machine, users can chop up the calculation themselves for cluster computing, set `return_ss_only` equal to `TRUE`, and then re-combine the results into $R^2$ using $1 - \frac{SSE}{SST}$ and obtaining $SSE$ and $SST$ by summing the intermediate results returned by each node. However if one goes this route, they must pre-calculate `ybar` and pass it to the function to be used in each node. If the user does not, SST will be calculated based on means of each batch independently and the resulting r-squared will be incorrect. Below is a trivial example for illustration using `lapply` instead of proper cluster computing.
 
 ```{r echo = TRUE}
 
@@ -263,7 +269,7 @@ Viewing $R^2$ as a ratio of distances motivates a new direction for extended def
 
 We have shown that $R^2$ can be calculated for multivariate outcomes from a geometric interpretation of (\ref{eqn:r2def1}). Since we use the standard definition of $R^2$, this approach does not alter existing issues motivating alternate definitions of $R^2$ for, e.g., Bayesian models or nonlinear models. It is worth noting that scale differences in outcome variables can swamp (\emph{TJ: meeaning?}) the calculation. We leave an exploration of remediation strategies to future work. We have implemented the $R^2$ metric in (\ref{eqn:r2euclidean}) in a package for the R programming language called `mvrsquared` [@mvrsquared].
 
-Our multivariate $R^2$ can be used in a number of subfields, some with currently limited model selection tools. In functional regression, various authors have proposed $R^2$-like metrics, see for example approaches taken by @Malfait2003, @Harezlak2007, @Meyer2015, and references therein. However, there is no generally agreed upon form for the functional $R^2$. Our approach adds to this literature with an alternative that has the added benefit of simplifying to the univariate $R^$ when $M = 1$. (\emph{TJ: add discussion of lack of model selection tools in topic models})
+Our multivariate $R^2$ can be used in a number of subfields, some with currently limited model selection tools. In functional regression, various authors have proposed $R^2$-like metrics, see for example approaches taken by [@Malfait2003, @Harezlak2007, @Meyer2015], and references therein. However, there is no generally agreed upon form for the functional $R^2$. Our approach adds to this literature with an alternative that has the added benefit of simplifying to the univariate $R^2$ when $M = 1$. (\emph{TJ: add discussion of lack of model selection tools in topic models})
 
 \newpage{}
 # References
