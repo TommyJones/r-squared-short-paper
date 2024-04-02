@@ -52,6 +52,11 @@ vocab <- tf$word[tf$docs >= 5]
 
 sbir_dtm <- sbir_dtm[, vocab]
 
+write_rds(
+  sbir_dtm,
+  "data-derived/sbir-dtm.rds"
+)
+
 ### fit models with 100 and 150 topics ----
 models <- 
   c(100, 150) |>
