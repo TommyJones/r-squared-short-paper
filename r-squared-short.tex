@@ -7,7 +7,7 @@
 \maketitle
 
 \abstract{%
-This research proposes a new (old) metric for evaluating goodness of fit. The cannonical coefficient of determination, \(R^2\), is useful only for outcomes in one dimension. We propose an extension of the traditional \(R^2\) valid for outcomes in multiple dimensions, when one is simultaneously predicting multiple variables. This metric is included in an R package on CRAN, \texttt{mvrsquared}. We demonstrate its use in several contexts: responses with 2 and 4 dimensions, function-on-function regression, and probabilistic topic modeling.
+This research proposes a new (old) metric for evaluating goodness of fit. The cannonical coefficient of determination, R-squared, is useful only for outcomes in one dimension. We propose an extension of the traditional R-squared, valid when one is simultaneously predicting multiple variables. This metric is included in the \texttt{mvrsquared} package, currently on CRAN. We demonstrate its use in several contexts: responses with 2 and 4 dimensions, function-on-function regression, and probabilistic topic modeling.
 }
 
 \hypertarget{introduction}{%
@@ -19,8 +19,8 @@ Several other pseudo \(R^2\) measures have been developed for other use cases, s
 
 In the univariate case, our \(R^2\) calculation yields the same result as the traditional \(R^2\), with the same properties. In the multivariate case, there is no lower bound of zero but we argue that this does not negatively affect interpretation. We provide this multivariate \(R^2\) calculation in an R package (R. C. Team 2013), \emph{mvrsquared}, which available on CRAN. (T. C. Team n.d.) In this manuscript, we describe its derivation in more detail, apply it to four multidimensional use cases, and describe the use of the \emph{mvrsquared} package.
 
-\hypertarget{a-geometric-interpretation-of-r2}{%
-\section{\texorpdfstring{A Geometric Interpretation of \(R^2\)}{A Geometric Interpretation of R\^{}2}}\label{a-geometric-interpretation-of-r2}}
+\hypertarget{a-geometric-iinterpretation-of-r2}{%
+\section{\texorpdfstring{A geometric iInterpretation of \(R^2\)}{A geometric iInterpretation of R\^{}2}}\label{a-geometric-iinterpretation-of-r2}}
 
 Let \(SSE\) denote the sum of squared errors and \(SST\) be the total sum of squares. The standard, model free, definition of \(R^2\) is then
 
@@ -70,7 +70,7 @@ One may also compute the partial \(R^2\) as in the traditional case using the fo
 where \(SSE_{partial}\) is the sum of squared errors of a model excluding the \(k\)-th predictor variable, denoted with a \((-k)\) superscript. We demonstrate the use of partial \(R^2\) for multidimensional outcomes in the topic modeling application, below.
 
 \hypertarget{properties-of-r2-for-multidimensional-outcomes}{%
-\subsection{\texorpdfstring{Properties of \(R^2\) for Multidimensional Outcomes}{Properties of R\^{}2 for Multidimensional Outcomes}}\label{properties-of-r2-for-multidimensional-outcomes}}
+\subsection{\texorpdfstring{Properties of \(R^2\) for multidimensional outcomes}{Properties of R\^{}2 for multidimensional outcomes}}\label{properties-of-r2-for-multidimensional-outcomes}}
 
 \(R^2\) for multidimensional outcomes is maximized at one---representing perfect predictions. This can be observed by setting \(\boldsymbol{y}_i = \hat{\boldsymbol{y}}_i\ \forall\ i\). It does not have a lower bound, as can be the case with certain circumstances with the traditional \(R^2\) described by (Barten 1987) and (Cameron and Windmeijer 1997). Its interpretation remains straightforward even without a lower bound. When \(R^2 = 0\), then \(SSE = SST\) and the model is no better than predicting the mean outcome for each observation. Then, negative values of \(R^2\) mean the model is even worse than predicting the mean outcome for every observation.
 
@@ -82,7 +82,7 @@ The \(R^2\) given in (\ref{eqn:r2def2}) is sensitive to the scale of the dimensi
 We demonstrate the use of \(R^2\) for multidimensional outcomes on four use cases: two multivariate regression models with varying values of \(M\) and scalar covariates, a function-on-function regression model, and a probabilistic topic modeling. In the regression contexts, we employ the multivariate \(R^2\) to conduct a simplified model selection for the purpose of illustration.
 
 \hypertarget{bivariate-response}{%
-\subsection{Bivariate Response}\label{bivariate-response}}
+\subsection{Bivariate response}\label{bivariate-response}}
 
 (Rudorfer 1982) discusses a small data set of 17 participants who experienced an overdose of the drug amitriptyline, a tricyclic antidepressant (TCAD) used to treat depression in adults. Since patients may be on multiple antidepressants, the bivariate outcomes of interest are the total TCAD plasma level in the blood and the amount of amitriptyline present in TCAD plasma levels. Potential covariates include sex, amount of antidepressants taken at time of overdose, the PR wave measurement from an electrocardiogram (ECG), diastolic blood pressure, and the QRS wave measurement from an ECG. The primary covariate of interest is the amount of antidepressants taken, so our model selection begins with that variable. We then consider two covariate, three covariate, four covariate, and, if necessary, five covariate models. The base model for the three covariate and four covariate models is the model with the highest percent change from the previous stage's best model. Thus, the two covariate model that provided the largest increase in \(R^2\) from the model with amount alone is the base model for the three covariate model, and so forth. These results are in Table \ref{tab:bivar}.
 
@@ -160,7 +160,7 @@ Three covariates: zst, fff, lff & 0.751 & 0.046\\
 \end{table}
 
 \hypertarget{function-on-function-regression}{%
-\subsection{Function-on-function Regression}\label{function-on-function-regression}}
+\subsection{Function-on-function regression}\label{function-on-function-regression}}
 
 Function-on-function regression (FFR) is a regression framework where both the response and the predictor (or predictors) are functions of time. The time domains need not necessarily align, although for a subclass of FFR models there is a requirement that measurements in the predictor occur before or at least concurrently with the response. This subclass of models is referred to as a Historical Functional Linear Model (HFLM). FFR models can include predictors with unrestricted time domains. The relationship between such predictors and the response is described by a surface. When a restriction is imposed for the historical relationship in an HFLM, the surface is truncated to at most the upper triangular region---although other forms of constraint are possible. For more on FFRs and HFLMs, we direct readers to reviews by Morris (2015) and Meyer (2023), respectively.
 
@@ -186,7 +186,7 @@ FH & 0.918\\
 \end{table}
 
 \hypertarget{probabilistic-topic-modeling}{%
-\subsection{Probabilistic Topic Modeling}\label{probabilistic-topic-modeling}}
+\subsection{Probabilistic topic modeling}\label{probabilistic-topic-modeling}}
 
 Topic models predict the frequencies of word occurrences across a corpus of documents using latent variables called ``topics''. Arguably the most famous of such models is Latent Dirichlet Allocation (LDA) (Blei, Ng, and Jordan 2003). LDA uses a Bayesian probability model to fit topics. In a probabilistic topic modeling framework, \(\boldsymbol{Y}\) is a matrix of integers whose \(i,j\) entries give the count of word \(j\) in document \(i\). Under the model, the \(i\)-th prediction is given by \(\hat{\boldsymbol{y}}_i = n_i \boldsymbol{\theta}_i \cdot \boldsymbol{B}\). Where \(\boldsymbol{B}\) is a matrix of latent topic distributions and \(\boldsymbol{\theta}_i\) a vector of topic frequencies in the \(i\)-th document.
 
