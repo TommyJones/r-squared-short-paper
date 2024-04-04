@@ -107,3 +107,84 @@ WARNING: Citation should include a link to the reference, preferably a
 DOI, unless online resources cannot be found.
 References without DOI or URL: mahalanobis, mcfadden1977application, cox1989analysis, hellinger1909new, blei2002lda, jones2023latent, JohnsonWichern2007.
 SUCCESS: No customised csl file used. Good!
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+ERROR: There are nested subdirectories. Please use at most two directory levels for the article.
+ERROR: Image(s) detected in the main directory: Rlogo-5.png.
+They should be placed in the figures/ folder.
+SUCCESS: No problematic file found
+SUCCESS: Possible motivation letter found: motivation-letter, motivation-letter.pdf
+SUCCESS: Article title formatted in title case.
+SUCCESS: Section titles formatted in sentence case.
+SUCCESS: Abstract formatted in plain text.
+NOTE: A potential list of spelling to check: cannonical, mvrsquared, interpretable, th, amitriptyline, tricyclic, diap, qrs, afl, lff, fff, zst, tidytext, tidyverse, et, al, pre, tidylda, depecting, resonable, calc, rsquared, coercible, yhat, ybar, scaler, ss, mtcars, lapply, subfields, barten, blei, lda, windmeijer, hellinger, jones, mahalanobis, mcfadden, rcppthread, tidytextjoss, rlang, cran
+SUCCESS: CRAN activities have been detected for package mvrsquared
+SUCCESS: No error with the use of \pkg markup.
+SUCCESS: All packages marked-up with \CRANpkg or \BIOpkg are available on CRAN or Bioconductor.
+WARNING: Citation should include a link to the reference, preferably a
+DOI, unless online resources cannot be found.
+References without DOI or URL: mahalanobis, mcfadden1977application, cox1989analysis, hellinger1909new, blei2002lda, jones2023latent, JohnsonWichern2007.
+SUCCESS: No customised csl file used. Good!
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+ERROR: There are nested subdirectories. Please use at most two directory levels for the article.
+ERROR: Image(s) detected in the main directory: Rlogo-5.png.
+They should be placed in the figures/ folder.
+SUCCESS: No problematic file found
+SUCCESS: Possible motivation letter found: motivation-letter, motivation-letter.pdf
+SUCCESS: Article title formatted in title case.
+SUCCESS: Section titles formatted in sentence case.
+SUCCESS: Abstract formatted in plain text.
+NOTE: A potential list of spelling to check: cannonical, mvrsquared, interpretable, th, amitriptyline, tricyclic, diap, qrs, afl, lff, fff, zst, tidytext, tidyverse, et, al, pre, tidylda, depecting, resonable, calc, rsquared, coercible, yhat, ybar, scaler, ss, mtcars, lapply, subfields, barten, blei, lda, windmeijer, hellinger, jones, mahalanobis, mcfadden, rcppthread, tidytextjoss, rlang, cran
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+ERROR: There are nested subdirectories. Please use at most two directory levels for the article.
+ERROR: Image(s) detected in the main directory: .
+They should be placed in the figures/ folder.
+SUCCESS: No problematic file found
+SUCCESS: Possible motivation letter found: motivation-letter, motivation-letter.pdf
+SUCCESS: Article title formatted in title case.
+SUCCESS: Section titles formatted in sentence case.
+SUCCESS: Abstract formatted in plain text.
+NOTE: A potential list of spelling to check: cannonical, mvrsquared, interpretable, th, amitriptyline, tricyclic, diap, qrs, afl, lff, fff, zst, tidytext, tidyverse, et, al, pre, tidylda, depecting, resonable, calc, rsquared, coercible, yhat, ybar, scaler, ss, mtcars, lapply, subfields, barten, blei, lda, windmeijer, hellinger, jones, mahalanobis, mcfadden, rcppthread, tidytextjoss, rlang, cran
+SUCCESS: CRAN activities have been detected for package mvrsquared
+SUCCESS: No error with the use of \pkg markup.
+SUCCESS: All packages marked-up with \CRANpkg or \BIOpkg are available on CRAN or Bioconductor.
+WARNING: Citation should include a link to the reference, preferably a
+DOI, unless online resources cannot be found.
+References without DOI or URL: mahalanobis, mcfadden1977application, cox1989analysis, hellinger1909new, blei2002lda, jones2023latent, JohnsonWichern2007.
+SUCCESS: No customised csl file used. Good!
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+ERROR: There are nested subdirectories. Please use at most two directory levels for the article.
+ERROR: Image(s) detected in the main directory: Rlogo-5.png.
+They should be placed in the figures/ folder.
+SUCCESS: No problematic file found
+SUCCESS: Possible motivation letter found: motivation-letter, motivation-letter.pdf
+SUCCESS: Article title formatted in title case.
+SUCCESS: Section titles formatted in sentence case.
+SUCCESS: Abstract formatted in plain text.
+NOTE: A potential list of spelling to check: cannonical, mvrsquared, interpretable, th, amitriptyline, tricyclic, diap, qrs, afl, lff, fff, zst, tidytext, tidyverse, et, al, pre, tidylda, depecting, resonable, calc, rsquared, coercible, yhat, ybar, scaler, ss, mtcars, lapply, subfields, barten, blei, lda, windmeijer, hellinger, jones, mahalanobis, mcfadden, rcppthread, tidytextjoss, rlang, cran
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+ERROR: There are nested subdirectories. Please use at most two directory levels for the article.
+ERROR: Image(s) detected in the main directory: Rlogo-5.png.
+They should be placed in the figures/ folder.
+SUCCESS: No problematic file found
+SUCCESS: Possible motivation letter found: motivation-letter, motivation-letter.pdf
+SUCCESS: Article title formatted in title case.
+SUCCESS: Section titles formatted in sentence case.
+SUCCESS: Abstract formatted in plain text.
+NOTE: A potential list of spelling to check: cannonical, mvrsquared, interpretable, th, amitriptyline, tricyclic, diap, qrs, afl, lff, fff, zst, tidytext, tidyverse, et, al, pre, tidylda, depecting, resonable, calc, rsquared, coercible, yhat, ybar, scaler, ss, mtcars, lapply, subfields, barten, blei, lda, windmeijer, hellinger, jones, mahalanobis, mcfadden, rcppthread, tidytextjoss, rlang, cran
+SUCCESS: CRAN activities have been detected for package mvrsquared
+SUCCESS: No error with the use of \pkg markup.
+SUCCESS: All packages marked-up with \CRANpkg or \BIOpkg are available on CRAN or Bioconductor.
+WARNING: Citation should include a link to the reference, preferably a
+DOI, unless online resources cannot be found.
+References without DOI or URL: mahalanobis, mcfadden1977application, cox1989analysis, hellinger1909new, blei2002lda, jones2023latent, JohnsonWichern2007.
+SUCCESS: No customised csl file used. Good!

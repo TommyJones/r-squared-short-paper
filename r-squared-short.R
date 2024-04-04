@@ -2,7 +2,7 @@
 # Please edit r-squared-short.Rmd to modify this file
 
 ## ----setup, include=FALSE-----------------------------------------------------
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = FALSE, message = FALSE)
 
 options(tinytex.verbose = TRUE)
 
