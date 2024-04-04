@@ -7,7 +7,7 @@
 \maketitle
 
 \abstract{%
-This research proposes a new (old) metric for evaluating goodness of fit. The cannonical coefficient of determination, R-squared, is useful only for outcomes in one dimension. We propose an extension of the traditional R-squared, valid when one is simultaneously predicting multiple variables. This metric is included in the \texttt{mvrsquared} package, currently on CRAN. We demonstrate its use in several contexts: responses with 2 and 4 dimensions, function-on-function regression, and probabilistic topic modeling.
+This research proposes a new (old) metric for evaluating goodness of fit. The cannonical coefficient of determination, R-squared, is useful only for outcomes in one dimension. We propose an extension of the traditional R-squared, valid when one is simultaneously predicting multiple variables. This metric is included in the mvrsquared package, currently on CRAN. We demonstrate its use in several contexts: responses with 2 and 4 dimensions, function-on-function regression, and probabilistic topic modeling.
 }
 
 \hypertarget{introduction}{%
@@ -19,8 +19,8 @@ Several other pseudo \(R^2\) measures have been developed for other use cases, s
 
 In the univariate case, our \(R^2\) calculation yields the same result as the traditional \(R^2\), with the same properties. In the multivariate case, there is no lower bound of zero but we argue that this does not negatively affect interpretation. We provide this multivariate \(R^2\) calculation in an R package (R. C. Team 2013), \emph{mvrsquared}, which available on CRAN. (T. C. Team n.d.) In this manuscript, we describe its derivation in more detail, apply it to four multidimensional use cases, and describe the use of the \emph{mvrsquared} package.
 
-\hypertarget{a-geometric-iinterpretation-of-r2}{%
-\section{\texorpdfstring{A geometric iInterpretation of \(R^2\)}{A geometric iInterpretation of R\^{}2}}\label{a-geometric-iinterpretation-of-r2}}
+\hypertarget{a-geometric-interpretation-of-r2}{%
+\section{\texorpdfstring{A geometric interpretation of \(R^2\)}{A geometric interpretation of R\^{}2}}\label{a-geometric-interpretation-of-r2}}
 
 Let \(SSE\) denote the sum of squared errors and \(SST\) be the total sum of squares. The standard, model free, definition of \(R^2\) is then
 
@@ -224,7 +224,7 @@ Evidence for using \(R^2\) for selecting the number of topics to model (i.e., mo
 Also discussed in Jones (2023) \(R^2\) for multidimensional outcomes applied to topic models is invariant to most properties of the underlying data save one, document length. Shorter documents tend to produce data sets with higher variance in word frequencies across documents. As a result, \(R^2\) tends to be lower, owning to the fact that one is modeling noisier data, consistent with the behavior of traditional \(R^2\).
 
 \hypertarget{the-mvrsquared-package}{%
-\section{\texorpdfstring{The \emph{mvrsquared} Package}{The mvrsquared Package}}\label{the-mvrsquared-package}}
+\section{\texorpdfstring{The \emph{mvrsquared} package}{The mvrsquared package}}\label{the-mvrsquared-package}}
 
 We have included our \(R^2\) calculation in a package, \texttt{mvrsquared}, now available on CRAN. \texttt{mvrsquared} contains a single function, \texttt{calc\_rsquared}, whose arguments are as follows:
 

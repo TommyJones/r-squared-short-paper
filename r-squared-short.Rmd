@@ -1,7 +1,7 @@
 ---
 title: "A New (Old) Goodness of Fit Metric for Multidimensional Outcomes"
 abstract: >
-  This research proposes a new (old) metric for evaluating goodness of fit. The cannonical coefficient of determination, R-squared, is useful only for outcomes in one dimension. We propose an extension of the traditional R-squared, valid when one is simultaneously predicting multiple variables. This metric is included in the `mvrsquared` package, currently on CRAN. We demonstrate its use in several contexts: responses with 2 and 4 dimensions, function-on-function regression, and probabilistic topic modeling. 
+  This research proposes a new (old) metric for evaluating goodness of fit. The cannonical coefficient of determination, R-squared, is useful only for outcomes in one dimension. We propose an extension of the traditional R-squared, valid when one is simultaneously predicting multiple variables. This metric is included in the mvrsquared package, currently on CRAN. We demonstrate its use in several contexts: responses with 2 and 4 dimensions, function-on-function regression, and probabilistic topic modeling. 
 draft: true
 author: 
   - name: Tommy Jones
@@ -303,7 +303,7 @@ est_k$est_k |>
 
 Also discussed in @jones2023latent $R^2$ for multidimensional outcomes applied to topic models is invariant to most properties of the underlying data save one, document length. Shorter documents tend to produce data sets with higher variance in word frequencies across documents. As a result, $R^2$ tends to be lower, owning to the fact that one is modeling noisier data, consistent with the behavior of traditional $R^2$. 
 
-# The _mvrsquared_ Package
+# The _mvrsquared_ package
 We have included our $R^2$ calculation in a package, `mvrsquared`, now available on CRAN. `mvrsquared` contains a single function, `calc_rsquared`, whose arguments are as follows:
 
 * `y` is the true outcome. This must be a numeric vector, numeric matrix, or coercible to a sparse matrix of class `dgCMatrix`.
