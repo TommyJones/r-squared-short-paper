@@ -4,15 +4,15 @@ library(mvrsquared)
 library(refund)
 
 #### load data ####
-emg <- read_table("data-raw/functional-data-analysis-example/EMG.dat", col_names = FALSE) |>
+emg <- read_table("data-raw/EMG.dat", col_names = FALSE) |>
   as.matrix() |>
   t()
 
-acc <- read_table("data-raw/functional-data-analysis-example/LipAcc.dat", col_names = FALSE) |>
+acc <- read_table("data-raw/LipAcc.dat", col_names = FALSE) |>
   as.matrix() |>
   t()
 
-pos <- read_table("data-raw/functional-data-analysis-example/LipPos.dat", col_names = FALSE) |>
+pos <- read_table("data-raw/LipPos.dat", col_names = FALSE) |>
   as.matrix() |>
   t()
 

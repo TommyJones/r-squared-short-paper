@@ -12,7 +12,7 @@ library(tidyverse)
 # amit          <- read.table('./Data/T7-6.DAT', header = FALSE)
 
 ami_data <- 
-  read.table("data-raw/multivariate-example/T7-6.DAT", header = FALSE)
+  read.table("data-raw/T7-6.DAT", header = FALSE)
 
 names(ami_data)  <- c('tot', 'ami', 'sex', 'amt', 'pr', 'diap', 'qrs')
 
@@ -27,7 +27,7 @@ ami_data <- as_tibble(ami_data)
 # primary source: R. A. Johnson and D. W. Wichern (2007). Applied Multivariate Statistical Analysis
 #                 6th Ed. Pearson Prentice Hall, Upper Sadle River, NJ, USA.
 
-pulp_data <- read.table("data-raw/multivariate-example/T7-7.dat")
+pulp_data <- read.table("data-raw/T7-7.dat")
 
 names(pulp_data)   <- c('bl', 'em', 'sf', 'bs', 'afl', 'lff', 'fff', 'zst')
 

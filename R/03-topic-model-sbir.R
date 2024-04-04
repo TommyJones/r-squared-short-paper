@@ -9,7 +9,7 @@ library(janitor)
 library(Matrix)
 
 ### Load the SBIR data and curate it ----
-sbir <- read_csv("data-raw/sbir/award_data.csv") |>
+sbir <- read_csv("data-raw/award_data.csv") |>
   clean_names()
 
 sbir <- 
