@@ -7,10 +7,10 @@ knitr::opts_chunk$set(echo = FALSE, cache = FALSE, message = FALSE)
 options(tinytex.verbose = TRUE)
 
 library(tidyverse)
-library(kableExtra)
+# library(kableExtra)
 
 
-## ----geometricgraphic, fig.cap = "Visualizing the geometric interpretation of R-squared. Sum up the squared length of each line segment for the total (left) or residual (right) sums of squares. This figure corresponds to an R-squared of 0.87", fig.asp = .55----
+## ----geometricgraphic, fig.cap = "Visualizing the geometric interpretation of R-squared. Sum up the squared length of each line segment for the total (left) or residual (right) sums of squares. This figure corresponds to an R-squared of 0.87", fig.asp = .55, fig.alt = "Visualizing the geometric interpretation of R-squared. Sum up the squared length of each line segment for the total (left) or residual (right) sums of squares. This figure corresponds to an R-squared of 0.87"----
 set.seed("8675309")
 
 # Generate sample data poings
@@ -174,7 +174,7 @@ table |>
   # kableExtra::collapse_rows(1:2)
 
 
-## ----selecttopics, fig.cap = "Using R-squared to select the number of topics. Results are mixed. There is neither a peak, nor does the curve monotonically increase.", fig.width = 6, fig.height = 3----
+## ----selecttopics, fig.cap = "Using R-squared to select the number of topics. Results are mixed. There is neither a peak, nor does the curve monotonically increase.", fig.width = 6, fig.height = 3, fig.alt = "A line chart using R-squared as a selection criteria for the number of topics. Results are mixed. There is neither a peak, nor does the curve monotonically increase."----
 
 est_k <- read_rds("data-derived/sbir-model-selection.rds")
 

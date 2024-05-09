@@ -17,7 +17,8 @@ header-includes:
     - \usepackage{amsmath}
 
 output:
-  rjtools::rjournal_pdf_article
+  - rjtools::rjournal_pdf_article
+  - rjtools::rjournal_html_article
   # pdf_document:
   # bookdown::pdf_document2:
     # number_sections: true
@@ -30,7 +31,7 @@ knitr::opts_chunk$set(echo = FALSE, cache = FALSE, message = FALSE)
 options(tinytex.verbose = TRUE)
 
 library(tidyverse)
-library(kableExtra)
+# library(kableExtra)
 ```
 
 # Introduction
@@ -73,7 +74,7 @@ where $\bar{\boldsymbol{y}}$ is the $M\times 1$ average vector, averaging across
 
 Figure \@ref(fig:geometricgraphic)  visualizes the geometric interpretation of $R^2$ for outcomes in $\mathbb{R}_2$. The left image represents $SST$: the red dots are data points ($\boldsymbol{y}_i$); the black dot is the vector of means ($\bar{\boldsymbol{y}}$); the line segments represent the Euclidean distance from each $\boldsymbol{y}_i$ to $\bar{\boldsymbol{y}}$. $SST$ is obtained by squaring the length of each line segment and then adding the squared segments together. The right image represents $SSE$: the blue dots are the fitted values ($\hat{\boldsymbol{y}}_i$); the line segments represent the Euclidean distance from each $\hat{\boldsymbol{y}}_i$ to its corresponding $\boldsymbol{y}_i$. $SSE$ is obtained by squaring the length of each line segment and then adding the squared segments together.
 
-```{r geometricgraphic, fig.cap = "Visualizing the geometric interpretation of R-squared. Sum up the squared length of each line segment for the total (left) or residual (right) sums of squares. This figure corresponds to an R-squared of 0.87", fig.asp = .55}
+```{r geometricgraphic, fig.cap = "Visualizing the geometric interpretation of R-squared. Sum up the squared length of each line segment for the total (left) or residual (right) sums of squares. This figure corresponds to an R-squared of 0.87", fig.asp = .55, fig.alt = "Visualizing the geometric interpretation of R-squared. Sum up the squared length of each line segment for the total (left) or residual (right) sums of squares. This figure corresponds to an R-squared of 0.87"}
 set.seed("8675309")
 
 # Generate sample data poings
@@ -287,7 +288,7 @@ table |>
 
 Evidence for using $R^2$ for selecting the number of topics to model (i.e., model selection) is mixed. In a second experiment, we explore model selection on a random sample of 1,000 documents from the SBIR corpus. We fit models over a range of 50 to 300 topics---with a step size of 10---using the same specification as above. Figure \@ref(fig:selecttopics) displays the $R^2$ for each model, plotted against the number of topics. Rather than depecting a clear peak---which would be good for model selection---or a monotonically increasing curve---which would be bad---$R^2$ flattens off at about 150 topics. Citing the principle of parsimony, perhaps ~150 topics is a resonable choice. In an earlier work---chapter 4 of @jones2023latent---we explore using our $R^2$ calculation for topic modeling in more detail and find similar results.
 
-```{r selecttopics, fig.cap = "Using R-squared to select the number of topics. Results are mixed. There is neither a peak, nor does the curve monotonically increase.", fig.width = 6, fig.height = 3}
+```{r selecttopics, fig.cap = "Using R-squared to select the number of topics. Results are mixed. There is neither a peak, nor does the curve monotonically increase.", fig.width = 6, fig.height = 3, fig.alt = "A line chart using R-squared as a selection criteria for the number of topics. Results are mixed. There is neither a peak, nor does the curve monotonically increase."}
 
 est_k <- read_rds("data-derived/sbir-model-selection.rds")
 

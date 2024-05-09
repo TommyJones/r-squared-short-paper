@@ -30,7 +30,7 @@ Regards,
     
     
 Tommy Jones  
-CEO, Foundation  
+Foundation  
 Arlington, Virginia, USA  
 tommy@foundation.sh  
 
