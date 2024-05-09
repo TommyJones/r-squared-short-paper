@@ -1,1 +1,7 @@
-This repo contains a short paper describing a variation on R-squared for multivariate outcomes.  This work was originally derived for topic models. The (as yet unpublished) topic modeling version is [here](https://arxiv.org/pdf/1911.11061.pdf). This paper is hopefully destined for a statistics journal and can be used more generally. The calculation described is available in the R Package `mvrsquared`, [available on CRAN.](https://CRAN.R-project.org/package=mvrsquared).
+This repo contains a short paper describing a variation on R-squared for multivariate outcomes. 
+
+To compile this paper please do the following:
+
+1. Run all scripts in R/ in numerical order, from "01-" to "05-"
+2. Knit r-squared-short.Rmd using RStudio or knitr
+
